@@ -2,8 +2,8 @@ const express = require("express");
 const { randomBytes } = require("crypto");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-const app = express();
 const axios = require("axios");
+const app = express();
 
 app.use(bodyParser.json())
 
@@ -24,9 +24,9 @@ app.post("/posts/comments/:id", async (req, res) => {
 
     commentsByPostId[req.params.id] = comments
 
-    await axios.post('http://localhost:4005/events', {
+    await axios.post("http://localhost:4005/events", {
         type : 'CommentCreated',
-        daat : {
+        data : {
             id : commentId,
             content,
             postId : req.params.id

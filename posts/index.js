@@ -1,8 +1,8 @@
 const express = require("express");
 const { randomBytes } = require("crypto");
+const axios = require("axios");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-const axios = require("axios");
 
 const app = express();
 
@@ -36,7 +36,7 @@ app.get("/posts", (req, res) => {
 });
 
 app.post("/events", (req, res) => {
-    console.log("Received Event", req.body.type);
+    console.log("Event Received", req.body.type);
 
     res.send({});
 })
