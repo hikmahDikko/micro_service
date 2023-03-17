@@ -12,7 +12,7 @@ app.get("/posts", (req, res) => {
     res.send(posts)
 });
 
-app.get("/events", (req, res) => {
+app.post("/events", (req, res) => {
     const { type, data } = req.body;
     
     if(type === 'PostCreated') {
@@ -22,16 +22,28 @@ app.get("/events", (req, res) => {
     }
 
     if(type === 'CommentCreated') {
-        const { id, content, postId } = data;
+        const { id, content, postId, status } = data;
 
         const post = posts[postId];
-        post.comments.push({ id, content });
+        post.comments.push({ id, content, status });
+    }
+
+    if(type === "CommentUpdated") {
+        const {id, content, postId, status} = data;
+
+        const post = posts[postId];
+
+        const comment = post.comments.find(comment => {
+            return comment.id === id;
+        });
+
+        comment.status = status;
+        comment.content = content;
     }
 
     res.send({});
 });
 
-console.log(posts);
-app.listen(4002, () =>{
+app.listen(4002, () => {
     console.log("Listening on port 4002")
 })
